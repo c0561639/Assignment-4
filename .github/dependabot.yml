@@ -1,0 +1,26 @@
+#Adding weekly dependabot updates for every sunday @ 11:59 PM
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "23:59"
+      timezone: "America/Toronto"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "23:59"
+      timezone: "America/Toronto"
+
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "23:59"
+      timezone: "America/Toronto"
