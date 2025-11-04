@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+        #Creating .env
+      - name: Create .env from GitHub Secret
+        run: |
+          printf '%s' "${{ secrets.Assignment4Secret }}" > .env
+
+        #Checking that .env was created
+      - name: Check if .env exists
+        run: |
+          ls -la
+          echo "Line count of .env:"; wc -l .env
+          echo "Keys found in .env (masked):"
+          awk -F= '{print $1"=****"}' .env
+
+        #Building the docker image
+      - name: Build Docker image
+        run: docker build -t assignment4_flask_demo:ci .
+
+        #Running the docker contrainer with the secret .env
+      - name: Run container with env file
+        run: docker run -d --name app --env-file .env -p 5000:5000 assignment4_flask_demo:ci
+
+        #Ensuring it works~
+      - name: Test endpoints
+        run: |
+          sleep 3
+          curl --fail http://localhost:5000/
+          curl --fail http://localhost:5000/health
+
+        #Standard clean up~
+      - name: Cleanup
+        if: always()
+        run: docker rm -f app || true
