@@ -14,7 +14,7 @@ jobs:
         #Creating .env
       - name: Create .env from GitHub Secret
         run: |
-          printf '%s' "${{ secrets.Assignment4Secret }}" > .env
+          printf '%s' "${{ secrets.ASSIGNMENT4SECRET }}" > .env
 
         #Checking that .env was created
       - name: Check if .env exists
