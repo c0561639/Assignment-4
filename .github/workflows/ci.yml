@@ -38,6 +38,7 @@ jobs:
           sleep 3
           curl --fail http://localhost:5000/
           curl --fail http://localhost:5000/health
+          curl --fail http://localhost:5000/message
 
         #Standard clean up~
       - name: Cleanup
